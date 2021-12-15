@@ -1,20 +1,24 @@
-import { useRecoilState, atom } from 'recoil'
+import { useRecoilState, atom } from 'recoil';
 
-import { StringUtils } from './Utils'
+import { StringUtils } from './Utils';
 
 const GlobalStates = (stateName, defaultValue) => {
-  const stateAtom = atom({
-    key: stateName,
-    default: defaultValue
-  })
+  try {
+    const stateAtom = atom({
+      key: stateName,
+      default: defaultValue,
+    });
 
-  const [recoilState, setRecoilState] = useRecoilState(stateAtom)
-  const setState = `set${StringUtils.capitalizeText(stateName)}`
+    const [recoilState, setRecoilState] = useRecoilState(stateAtom);
+    const setState = `set${StringUtils.capitalizeText(stateName)}`;
 
-  return {
-    [stateName]: recoilState,
-    [setState]: setRecoilState
+    return [
+      recoilState,
+      setRecoilState,
+    ];
+  } catch (error) {
+    console.log(error);
   }
-}
+};
 
-export default GlobalStates;
+export { GlobalStates };

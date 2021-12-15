@@ -1,66 +1,88 @@
-import React, { PureComponent } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-import GlobalStates from './GlobalStateManagement';
+import { GlobalStates } from './GlobalStateManagement';
 
-class MicroFrontend extends PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isError: false,
-      isLoading: true
-    };
-  }
+const MicroFrontend = props => {
+  const { name, history, host } = props;
+  const [isError, setIsError] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [stateKey, setStateKey] = useState('');
+  const [requestedGlobalState, setRequestedGlobalState] = GlobalStates(stateKey, '');
 
-  attachMicrofrontend = (microfrontendManifest, name) => {
-    const { host } = this.props;
+  const attachMicrofrontend = (microfrontendManifest, name) => {
     const script = document.createElement('script');
     script.id = name;
     script.src = `${host}${microfrontendManifest['main.js']}`;
-    script.onload = this.renderMicroFrontend;
-    document.head.appendChild(script);
+    script.onload = renderMicroFrontend;
+    document.getElementById('root').appendChild(script);
   };
 
-  fetchMicrofrontend = async (host, scriptId) => {
+  const fetchMicrofrontend = async (host, scriptId) => {
     try {
       const microfrontendURL = `${host}/asset-manifest.json`;
       const { data: fetchedMicrofrontend } = await axios.get(microfrontendURL);
-      this.attachMicrofrontend(fetchedMicrofrontend, scriptId);
+      attachMicrofrontend(fetchedMicrofrontend, scriptId);
     } catch (error) {
-      this.setState({ isError: true })
+      setIsError(true);
     } finally {
-      this.setState({ isLoading: false })
+      setIsLoading(false);
     }
   };
 
-  componentDidMount = async () => {
-    const { host, name } = this.props;
+  useEffect(() => {
+    componentDidMount();
+    return componentWillUnmount;
+  }, []);
+
+  const componentDidMount = async () => {
+    const { host, name } = props;
     const fetchedMicrofrontend = document.getElementById(name);
 
     if (fetchedMicrofrontend) {
-      this.renderMicroFrontend();
+      renderMicroFrontend();
       return;
     }
-    return this.fetchMicrofrontend(host, name);
+    return fetchMicrofrontend(host, name);
   };
 
-  componentWillUnmount = () => {
-    const { name } = this.props;
-
-    window[`unmount${name}`](`${name}-container`);
+  const componentWillUnmount = () => {
+    try {
+      window[`unmount${name}`](`${name}-container`);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  renderMicroFrontend = () => {
-    const { name, history } = this.props;
-
-    window[`render${name}`](`${name}-container`, history, GlobalStates);
+  const renderMicroFrontend = () => {
+    try {
+      window[`render${name}`](`${name}-container`, history);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  render() {
-    const { name } = this.props;
-
-    return <main id={`${name}-container`} />;
-  }
-}
+  return (
+    <>
+      <button
+        onClick={() => {
+          setStateKey('name');
+          console.log('DEBUG: ', requestedGlobalState);
+        }}
+      >
+        Get Global State
+      </button>
+      <button
+        onClick={() => {
+          setStateKey('name');
+          setRequestedGlobalState('Modified name ' + new Date().getMilliseconds());
+        }}
+      >
+        Update Global State
+      </button>
+      {requestedGlobalState && <p>{requestedGlobalState.name}</p>}
+    </>
+  );
+};
 
 export default MicroFrontend;

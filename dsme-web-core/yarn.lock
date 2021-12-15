@@ -7126,10 +7126,9 @@ methods@~1.1.2:
   resolved "https://registry.yarnpkg.com/methods/-/methods-1.1.2.tgz#5529a4d67654134edcc5266656835b0f851afcee"
   integrity sha1-VSmk1nZUE07cxSZmVoNbD4Ua/O4=
 
-microfrontend-components@../microfrontend-components:
-  version "1.0.1"
-  dependencies:
-    antd "^4.17.2"
+"microfrontend-components@link:../microfrontend-components":
+  version "0.0.0"
+  uid ""
 
 micromatch@^2.3.11:
   version "2.3.11"

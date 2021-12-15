@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "axios": "^0.24.0",
-    "microfrontend-components": "../microfrontend-components",
+    "microfrontend-components": "link:../microfrontend-components",
     "react": "16.8.6",
     "react-app-polyfill": "^0.2.2",
     "react-app-rewire-micro-frontends": "^0.0.1",
