@@ -1,14 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import axios from 'axios';
 
-import { GlobalStates } from './GlobalStateManagement';
-
 const MicroFrontend = props => {
-  const { name, history, host } = props;
-  const [isError, setIsError] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
-  const [stateKey, setStateKey] = useState('');
-  const [requestedGlobalState, setRequestedGlobalState] = GlobalStates(stateKey, '');
+  const { name, history, host, GlobalStatesProvider, GlobalRoutesProvider } = props;
+  console.log('Debug MF Comp', GlobalStatesProvider);
 
   const attachMicrofrontend = (microfrontendManifest, name) => {
     const script = document.createElement('script');
@@ -24,9 +19,9 @@ const MicroFrontend = props => {
       const { data: fetchedMicrofrontend } = await axios.get(microfrontendURL);
       attachMicrofrontend(fetchedMicrofrontend, scriptId);
     } catch (error) {
-      setIsError(true);
+      // setIsError(true);
     } finally {
-      setIsLoading(false);
+      // setIsLoading(false);
     }
   };
 
@@ -36,7 +31,6 @@ const MicroFrontend = props => {
   }, []);
 
   const componentDidMount = async () => {
-    const { host, name } = props;
     const fetchedMicrofrontend = document.getElementById(name);
 
     if (fetchedMicrofrontend) {
@@ -56,33 +50,15 @@ const MicroFrontend = props => {
 
   const renderMicroFrontend = () => {
     try {
-      window[`render${name}`](`${name}-container`, history);
+      window[`render${name}`](`${name}-container`, history, GlobalStatesProvider, GlobalRoutesProvider);
     } catch (error) {
       console.log(error);
     }
   };
 
   return (
-    <>
-      <button
-        onClick={() => {
-          setStateKey('name');
-          console.log('DEBUG: ', requestedGlobalState);
-        }}
-      >
-        Get Global State
-      </button>
-      <button
-        onClick={() => {
-          setStateKey('name');
-          setRequestedGlobalState('Modified name ' + new Date().getMilliseconds());
-        }}
-      >
-        Update Global State
-      </button>
-      {requestedGlobalState && <p>{requestedGlobalState.name}</p>}
-    </>
-  );
+    <main id={`${name}-container`} />
+  )
 };
 
 export default MicroFrontend;

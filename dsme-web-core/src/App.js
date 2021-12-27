@@ -1,19 +1,16 @@
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
-import { RecoilRoot } from 'recoil';
 
-import UnauthorizedRoutes from './Routes/UnauthorizedRoutes';
-import AuthorizedRoutes from './Routes/AuthorizedRoutes';
+import Routes from './Routes/Routes';
 
-const App = () => (
-  <RecoilRoot>
-    <BrowserRouter>
-      <React.Fragment>
-        <UnauthorizedRoutes />
-        <AuthorizedRoutes />
-      </React.Fragment>
-    </BrowserRouter>
-  </RecoilRoot>
-);
+const App = () => {
+  return (
+      <BrowserRouter>
+        <React.Fragment>
+          <Routes/>
+        </React.Fragment>
+      </BrowserRouter>
+  );
+};
 
 export default App;

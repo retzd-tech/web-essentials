@@ -4,11 +4,9 @@ import { createBrowserHistory } from 'history';
 
 import Routes from './Routes';
 
-const defaultHistory = createBrowserHistory();
-
-const App = ({ history = defaultHistory }) => (
+const App = ({ GlobalStatesProvider, history, GlobalRoutesProvider }) => (
   <Router history={history}>
-    <Routes />
+    <Routes history={history} GlobalRoutesProvider={GlobalRoutesProvider} GlobalStatesProvider={GlobalStatesProvider}/>
   </Router>
 );
 

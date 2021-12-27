@@ -17,7 +17,7 @@ const Navbar = (props) => {
   const renderMenuItems = (menuItems) => {
     return menuItems.map((menu) => {
       const { key, text } = menu;
-      return renderMenuItem(key, 'hardcoded text');
+      return renderMenuItem(key, text);
     });
   };
 

@@ -3,9 +3,9 @@ import { Switch, Route } from 'react-router-dom';
 
 import SomeComponent from './Components/SomeComponent';
 
-const Routes = () => (
+const Routes = (props) => (
   <Switch>
-    <Route exact path="/dashboard" component={SomeComponent} />
+    <Route exact path="/dashboard" render={() => <SomeComponent {...props}/>} />
   </Switch>
 );
 
