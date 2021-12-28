@@ -1,8 +1,7 @@
 import React from 'react';
 
-const SomeComponent = props => {
-  console.log('DEBUG Props ', props);
-  return <div>this is Some Component of mf-dashboard</div>;
+const SomeComponent = () => {
+  return <div>this is Some Dashboard Component of mf-dashboard after logged in</div>;
 };
 
 export default SomeComponent;

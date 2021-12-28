@@ -3,11 +3,10 @@ import { Router } from 'react-router-dom';
 
 import Routes from './Routes';
 
-const App = ({ history, GlobalStatesProvider, GlobalRoutesProvider}) => {
-  console.log('DEBUG App dash: ', GlobalStatesProvider);
+const App = ({ history, GlobalAPIProvider}) => {
   return (
   <Router history={history}>
-    <Routes history={history} GlobalStatesProvider={GlobalStatesProvider} GlobalRoutesProvider={GlobalRoutesProvider} />
+    <Routes history={history} GlobalAPIProvider={GlobalAPIProvider} />
   </Router>
 )};
 

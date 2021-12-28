@@ -2,8 +2,7 @@ import React, { useEffect } from 'react';
 import axios from 'axios';
 
 const MicroFrontend = props => {
-  const { name, history, host, GlobalStatesProvider, GlobalRoutesProvider } = props;
-  console.log('Debug MF Comp', GlobalStatesProvider);
+  const { name, history, host, GlobalAPIProvider } = props;
 
   const attachMicrofrontend = (microfrontendManifest, name) => {
     const script = document.createElement('script');
@@ -50,7 +49,7 @@ const MicroFrontend = props => {
 
   const renderMicroFrontend = () => {
     try {
-      window[`render${name}`](`${name}-container`, history, GlobalStatesProvider, GlobalRoutesProvider);
+      window[`render${name}`](`${name}-container`, history, GlobalAPIProvider);
     } catch (error) {
       console.log(error);
     }

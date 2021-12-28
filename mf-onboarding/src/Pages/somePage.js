@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import Components from 'microfrontend-components';
+import { withRouter } from 'react-router-dom';
 
 const { Button, TextInput } = Components;
 
 const somePage = props => {
-  const { GlobalStatesProvider, GlobalRoutesProvider } = props;
+  const {
+    GlobalAPIProvider: { GlobalStatesProvider, GlobalRoutesProvider }
+  } = props;
   const [inputName, setInputName] = useState('');
 
   const handleOnClick = () => {
@@ -25,9 +28,12 @@ const somePage = props => {
     <>
       <div>Some Page of mf-onboarding</div>
       <TextInput placeholder="Input your name" onChange={handleOnChange} />
-      <Button text="Login" onClick={handleOnClick} />
+      <Button
+        text="Login and go to mf-dashboard page"
+        onClick={handleOnClick}
+      />
     </>
   );
 };
 
-export default somePage;
+export default withRouter(somePage);

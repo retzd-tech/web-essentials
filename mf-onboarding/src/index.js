@@ -5,9 +5,9 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import { unregister } from './Config/registerServiceWorker';
 
-window.renderMicroOnboarding = (containerId, history, GlobalStatesProvider, GlobalRoutesProvider) => {
+window.renderMicroOnboarding = (containerId, history, GlobalAPIProvider) => {
   ReactDOM.render(
-    <App history={history} GlobalStatesProvider={GlobalStatesProvider} GlobalRoutesProvider={GlobalRoutesProvider}/>,
+    <App history={history} GlobalAPIProvider={GlobalAPIProvider}/>,
     document.getElementById(containerId),
   );
   unregister();
