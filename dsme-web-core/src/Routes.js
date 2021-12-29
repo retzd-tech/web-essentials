@@ -52,10 +52,11 @@ const Routes = props => {
   const GlobalRoutesProvider = GlobalRoutesAPI(history);
   const GlobalStatesProvider = GlobalStatesAPI();
   const GlobalAPIProvider = { GlobalRoutesProvider, GlobalStatesProvider };
+  const name = GlobalStatesProvider.fullname || 'Anonymous';
 
   return (
     <>
-      <p>Hello {GlobalStatesProvider.fullname}, this is mf-container</p>
+      <p>Hello {name}, this is mf-container</p>
       <Switch>
         <Route
           exact
